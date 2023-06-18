@@ -21,7 +21,7 @@ function ChartInfoExtractor(_jsonObject: any): IChartInfo {
 
   if (_jsonObject != undefined) {
     chartArgs = {
-      title: (() => `Temperature readings for today : ${new Date(Date.now()).toLocaleDateString()}`)(),
+      title: (() => `${_jsonObject.label} readings for today : ${new Date(Date.now()).toLocaleDateString()}`)(),
       label: _jsonObject.label,
       bgColorRGBA: _jsonObject.bgColorRGBA,
       borderColorRGB: _jsonObject.borderColorRGB,

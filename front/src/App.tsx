@@ -1,12 +1,14 @@
 import { Component } from 'react'
 import './App.css'
 import Header from './shared/components/header/Header'
-import ChartCard from './shared/components/chart-holder/ChartCard'
 import { FormBuilder } from './shared/components/form-builder/FormBuilder'
 import {readFormElements} from './shared/utils/JsonReader';
 import data from './assets/json/data-editor-button-v1.json';
 import { createElement } from './shared/utils/ElementCreator';
 import TempChartCard from './shared/components/chart-holder/temperature/TempChartCard'
+import HumidityChartCard from './shared/components/chart-holder/humidity/HumidityChartCard'
+import PressureChartCard from './shared/components/chart-holder/pressure/PressureChartCard'
+import NoiseChartCard from './shared/components/chart-holder/noise/NoiseChartCard'
 
 
 class App extends Component<{}, IAppState>  {
@@ -32,10 +34,9 @@ class App extends Component<{}, IAppState>  {
 
           <div className="chart-ctn">
             <div><TempChartCard /></div>
-            <div><ChartCard /></div>
-            <div><ChartCard /></div>
-            <div><ChartCard /></div>
-            <div><ChartCard /></div>
+            <div><HumidityChartCard /></div>
+            <div><PressureChartCard /></div>
+            <div><NoiseChartCard /></div>
           </div>
         </main>
         <footer>
