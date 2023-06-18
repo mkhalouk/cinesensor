@@ -11,7 +11,12 @@ async function signUp(req, res, next) {
       isadmin: true,
       topic_token: 'topic/' + req.body.username
     });
-    await user.save();
+    try {
+      await user.save();
+      res.status(201).json({ message: 'User created successfully' });
+    } catch (error) {
+      next(error);
+    }
   } catch (error) {
     next(error);
   }
@@ -40,13 +45,13 @@ async function login(req, res, next) {
     const password = req.body.password;
     if (user) {
       if (await bcrypt.compare(password, user.password)) {
-        req.session.user = user;
-        res.redirect('/home');
+        // TODO: fix this action (add session)
+        res.status(200).json({ message: 'Logged in successfully' });
       } else {
-        res.render('pages/login', { error: 'Mot de passe incorrecte' });
+        res.status(200).json({ message: 'Incorrect password' });
       }
     } else {
-      res.render('pages/login', { error: 'Utilisateur inexstistant' });
+      res.status(200).json({ message: 'User not found' });
     }
   } catch (error) {
     next(error);

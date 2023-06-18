@@ -1,6 +1,6 @@
 async function getRoutes(req, res, app) {
   let routes = [];
-  app._router.stack.forEach((middleware) => {
+  req.app._router.stack.forEach((middleware) => {
     if (middleware.route) {
       // Routes registered directly on the app
       const methods = Object.keys(middleware.route.methods).join(', ').toUpperCase();
@@ -28,6 +28,11 @@ async function getRoutes(req, res, app) {
   );
 }
 
+async function checkBack(req, res) {
+  res.status(200).json({ message: "Backend application status: online!" });
+}
+
 module.exports = {
-  getRoutes
+  getRoutes,
+  checkBack
 };

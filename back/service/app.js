@@ -6,12 +6,16 @@ const PORT = 3000;
 
 //routes
 const userRouter = require("../routes/userRoutes");
-const generalController = require("../controller/generalController");
+const generalRouter = require("../routes/generalRoutes");
 
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/user', userRouter);
+app.use((req, res, next) => {
+  req.app = app;
+  next();
+});
 
-app.get('/', (req, res) => generalController.getRoutes(req, res, app)); // pass the app to the controller
+app.use('/user', userRouter);
+app.use('/', generalRouter);
 
 module.exports = { app, PORT };
