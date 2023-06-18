@@ -1,0 +1,28 @@
+{
+    "label": "data-editor",
+    "type": "object",
+    "children": [
+        {
+            "label": "data-editor-image",
+            "type": "image",
+            "properties": {
+                "src": "./src/assets/images/rotated-right-arrow-svgrepo-com.svg",
+                "alt": "The image is not available"
+            },
+            "style": {}
+        },
+        {
+            "label": "data-editor-button",
+            "type": "button",
+            "style": {
+                "background-color": "#5884ff",
+                "color": "#ffffff"
+            },
+            "properties": {
+                "onClick": "alert('Hello world!')",
+                "value": "Edit data"
+            },
+            "value": "Edit data"
+        }
+    ]
+}
