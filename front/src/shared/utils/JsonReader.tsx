@@ -1,7 +1,7 @@
 function readFormElements(_jsonObject: any, createElement: (data: any) => any): string {
   let _stringToRender = '';
   if (_jsonObject != undefined) {
-    if (_jsonObject.type.toUpperCase() === "OBJECT") {
+    if (["OBJECT", "STACK", "COLUMN", "R0W"].includes(_jsonObject.type.toUpperCase())) {
       _jsonObject.children.map((child: any) => {
         _stringToRender += createElement(child);
       });
