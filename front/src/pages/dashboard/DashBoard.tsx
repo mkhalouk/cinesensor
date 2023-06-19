@@ -1,6 +1,5 @@
 import { Component } from 'react'
 import Header from '../../shared/components/header/Header'
-import { FormBuilder } from '../../shared/components/form-builder/FormBuilder'
 import { readFormElements } from '../../shared/utils/JsonReader';
 import data from '../../assets/json/data-editor-button-v1.json';
 import { createElement } from '../../shared/utils/ElementCreator';
@@ -11,15 +10,19 @@ import NoiseChartCard from '../../shared/components/chart-holder/noise/NoiseChar
 import './DashBoard.css'
 
 
-class DashBoard extends Component<{}, IDashBoardState> {
+class DashBoard extends Component {
+
     constructor(props: any) {
         super(props);
-        this.state = { content: "<div>content</div>" };
+        this.state = { elements: [] };
     }
 
     componentDidMount() {
-        const _JsxString = readFormElements(data, (data: any) => createElement(data, {}));
-        this.setState({ content: _JsxString });
+        const _elements = readFormElements(data, (data: any) => {
+            const element = createElement(data, {});
+            return element;
+        });
+        this.setState({ elements: _elements });
     }
 
     render() {
@@ -30,7 +33,8 @@ class DashBoard extends Component<{}, IDashBoardState> {
                 </nav>
                 <main>
                     <div className="dataEditor">
-                        <FormBuilder html={this.state.content} />
+                        {this.state.elements}
+
                     </div>
 
                     <div className="chart-ctn">

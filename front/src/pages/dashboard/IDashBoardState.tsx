@@ -1,3 +1,0 @@
-interface IDashBoardState {
-    content: string;
-}

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { readFormElements } from '../../shared/utils/JsonReader';
 import data from '../../assets/json/login-form-v1.json';
 import { createElement } from '../../shared/utils/ElementCreator';
@@ -12,10 +12,8 @@ class Login extends Component {
     componentDidMount() {
         const _elements = readFormElements(data, (data: any) => {
           const element = createElement(data, {});
-          console.log(element); // debug logging
           return element;
         });
-        console.log(_elements); // debug logging
         this.setState({ elements: _elements });
       }
 
