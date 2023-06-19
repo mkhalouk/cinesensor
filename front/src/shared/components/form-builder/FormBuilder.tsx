@@ -1,28 +1,33 @@
-import { Component } from 'react';
+import { Component, CSSProperties } from 'react';
 
-export abstract class FormBuilder extends Component {
+export abstract class FormBuilder extends Component{
 
   constructor(props: any) {
     super(props);
   }
 
-  abstract buildJSXElementFromJson(data: string | any) : any;
+  // Provide a default implementation
+  buildJSXElementFromJson(data: string | any) : JSX.Element {
+    throw new Error('You have to implement the method buildJSXElementFromJson!');
+  };
 
 
-  buildCSSString(data: string | any) : string {
-    let _styleString = "";
-    if(data != undefined) {
-      Object.keys(data).forEach((key, index) => {
-        _styleString += `${key}:${Object.values(data)[index]};`
-      })
+  buildCSSString(data: string | any): CSSProperties {
+    let _styleObject: CSSProperties = {};
+    if (data != undefined) {
+      Object.entries(data).forEach(([key, value]) => {
+        let jsKey = key.replace(/-([a-z])/g, function (g) {
+          return g[1].toUpperCase();
+        }); // convert css-style keys to js-style
+        _styleObject[jsKey as keyof CSSProperties] = value;
+      });
     }
-    
-    return _styleString;
+
+    return _styleObject;
   }
 
-  render(): any {
-    return (
-      <div dangerouslySetInnerHTML={{__html: this.props.html}}></div>
-    )
+  render(): JSX.Element {
+    const jsxElement = this.buildJSXElementFromJson(this.props.data);
+    return jsxElement;
   }
 }
