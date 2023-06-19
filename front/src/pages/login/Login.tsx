@@ -1,26 +1,28 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { readFormElements } from '../../shared/utils/JsonReader';
 import data from '../../assets/json/login-form-v1.json';
 import { createElement } from '../../shared/utils/ElementCreator';
-import { FormBuilder } from '../../shared/components/form-builder/FormBuilder';
-
-
 
 class Login extends Component {
     constructor(props: any) {
         super(props);
-        this.state = { content: "<div>content</div>" };
+        this.state = { elements: [] };
     }
 
     componentDidMount() {
-        const _JsxString = readFormElements(data, (data: any) => createElement(data, {}));
-        this.setState({ content: _JsxString });
-    }
+        const _elements = readFormElements(data, (data: any) => {
+          const element = createElement(data, {});
+          console.log(element); // debug logging
+          return element;
+        });
+        console.log(_elements); // debug logging
+        this.setState({ elements: _elements });
+      }
 
     render() {
         return (
             <>
-                <FormBuilder html={this.state.content} />
+                {this.state.elements}
             </>
         )
     }

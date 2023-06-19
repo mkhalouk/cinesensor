@@ -1,13 +1,13 @@
-function readFormElements(_jsonObject: any, createElement: (data: any) => any): string {
-  let _stringToRender = '';
+function readFormElements(_jsonObject: any, createElement: (data: any) => any): JSX.Element[] {
+  let _elementsToRender : any[] = [];
   if (_jsonObject != undefined) {
     if (["OBJECT", "STACK", "COLUMN", "R0W"].includes(_jsonObject.type.toUpperCase())) {
       _jsonObject.children.map((child: any) => {
-        _stringToRender += createElement(child);
+        _elementsToRender.push(createElement(child));
       });
     }
   }
-  return _stringToRender;
+  return _elementsToRender;
 }
 
 function ChartInfoExtractor(_jsonObject: any): IChartInfo {
