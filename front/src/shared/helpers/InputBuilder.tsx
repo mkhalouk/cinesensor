@@ -1,4 +1,4 @@
-import { RefObject, createRef } from "react";
+import InputSharedState from "./data/InputSharedState";
 import { FormBuilder } from "../components/form-builder/FormBuilder";
 
 class InputBuilder extends FormBuilder {
@@ -7,7 +7,7 @@ class InputBuilder extends FormBuilder {
   }
 
   buildJSXElementFromJson(data: any): any {
-    const inputRef: RefObject<HTMLInputElement> = createRef();
+    const sharedState = InputSharedState.getInstance();
 
     const { style, attributes } = data;
 
@@ -22,17 +22,20 @@ class InputBuilder extends FormBuilder {
 
     const inputProps = {
       ...(isSubmit ? {} : { name: attributes.name, placeholder: attributes.placeholder }),
-      ref: inputRef,
+
       onChange: isSubmit ? undefined : (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event)
+        const value = event.target.value;
+        sharedState.setState({ [data.attributes.id]: value });
+        console.log(value);
       },
-      onClick: isSubmit ? (event: React.MouseEvent<HTMLInputElement>) => {
-        console.log(event)
+      onClick: isSubmit ? () => {
+        const state = sharedState.getState();
+        const value = state;
+        console.log(value);
       } : undefined
     };
 
     const _inputElement = <input key={data.label} {...commonProps} {...inputProps} />
-
 
     return _inputElement;
   }
