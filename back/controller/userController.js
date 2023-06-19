@@ -45,14 +45,39 @@ async function login(req, res, next) {
     const password = req.body.password;
     if (user) {
       if (await bcrypt.compare(password, user.password)) {
-        // TODO: fix this action (add session)
+        // Save the session ID in the user document
+        user.sessionId = req.session.id;
+        await user.save();
+
         res.status(200).json({ message: 'Logged in successfully' });
       } else {
-        res.status(200).json({ message: 'Incorrect password' });
+        res.status(401).json({ message: 'Incorrect password' });
       }
     } else {
-      res.status(200).json({ message: 'User not found' });
+      res.status(401).json({ message: 'User not found' });
     }
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function logout(req, res, next) {
+  try {
+    // Find the user based on the session ID
+    const user = await User.findOne({ sessionId: req.session.id });
+    if (user) {
+      // Clear the sessionId field in the user document
+      user.sessionId = '';
+      await user.save();
+    }
+
+    // Destroy the session
+    req.session.destroy((error) => {
+      if (error) {
+        return next(error);
+      }
+      res.status(200).json({ message: 'Logged out successfully' });
+    });
   } catch (error) {
     next(error);
   }
@@ -82,6 +107,7 @@ module.exports = {
   signUp,
   checkUser,
   login,
+  logout,
   getAllUsers,
-  getUserTopic
+  getUserTopic,
 };
