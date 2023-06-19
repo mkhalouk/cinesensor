@@ -1,4 +1,4 @@
-import { FormBuilder } from "../components/form-builder/FormBuilder";
+import { FormBuilder } from "../../components/form-builder/FormBuilder";
 
 class ImageBuilder extends FormBuilder {
 

@@ -23,9 +23,6 @@ ChartJS.register(
     Legend,
 );
 
-
-
-
 class ChartCard extends Component<{}, IChartCardState> {
 
 

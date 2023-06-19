@@ -1,3 +1,0 @@
-interface IAppState {
-    content: string;
-}

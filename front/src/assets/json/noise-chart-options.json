@@ -1,0 +1,50 @@
+{
+    "responsive": true,
+    "type": "line",
+    "plugins": {
+      "legend": {
+        "position": "bottom"
+      },
+      "title": {
+        "display": true,
+        "text": "",
+        "color": "black"
+      }
+    },
+    "color": "black",
+    "animations": {
+      "tension": {
+        "duration": 1000,
+        "easing": "linear",
+        "from": 1,
+        "to": 0,
+        "loop": true
+      }
+    },
+    "scales": {
+      "y": {
+        "min": 0,
+        "max": 100,
+        "ticks": {
+          "color": "black",
+          "beginAtZero": true
+        },
+        "grid": {
+          "color": "#cccccc"
+        }
+      },
+      "x": {
+        "grid": {
+          "color": "#cccccc"
+        },
+        "ticks": {
+          "color": "black",
+          "beginAtZero": true
+        }
+      }
+    },
+    "label": "Noise",
+    "bgColorRGBA": "(222, 226, 230, .5)",
+    "borderColorRGB": "(173, 181, 189)",
+    "pointColorRGB": "(73, 80, 87)"
+  }

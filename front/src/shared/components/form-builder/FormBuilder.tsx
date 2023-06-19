@@ -8,11 +8,15 @@ export abstract class FormBuilder extends Component {
 
   abstract buildJSXElementFromJson(data: string | any) : any;
 
+
   buildCSSString(data: string | any) : string {
     let _styleString = "";
-    Object.keys(data).forEach((key, index) => {
-      _styleString += `${key}:${Object.values(data)[index]};`
-    })
+    if(data != undefined) {
+      Object.keys(data).forEach((key, index) => {
+        _styleString += `${key}:${Object.values(data)[index]};`
+      })
+    }
+    
     return _styleString;
   }
 

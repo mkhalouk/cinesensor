@@ -1,0 +1,50 @@
+{
+    "responsive": true,
+    "type": "line",
+    "plugins": {
+      "legend": {
+        "position": "bottom"
+      },
+      "title": {
+        "display": true,
+        "text": "",
+        "color": "black"
+      }
+    },
+    "color": "black",
+    "animations": {
+      "tension": {
+        "duration": 1000,
+        "easing": "linear",
+        "from": 1,
+        "to": 0,
+        "loop": true
+      }
+    },
+    "scales": {
+      "y": {
+        "min": 0,
+        "max": 100,
+        "ticks": {
+          "color": "black",
+          "beginAtZero": true
+        },
+        "grid": {
+          "color": "#cccccc"
+        }
+      },
+      "x": {
+        "grid": {
+          "color": "#cccccc"
+        },
+        "ticks": {
+          "color": "black",
+          "beginAtZero": true
+        }
+      }
+    },
+    "label": "Humidity",
+    "bgColorRGBA": "(37, 162, 68, .5)",
+    "borderColorRGB": "(26, 116, 49)",
+    "pointColorRGB": "(16, 69, 29)"
+  }

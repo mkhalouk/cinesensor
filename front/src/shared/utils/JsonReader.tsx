@@ -1,7 +1,7 @@
 function readFormElements(_jsonObject: any, createElement: (data: any) => any): string {
   let _stringToRender = '';
   if (_jsonObject != undefined) {
-    if (_jsonObject.type.toUpperCase() === "OBJECT") {
+    if (["OBJECT", "STACK", "COLUMN", "R0W"].includes(_jsonObject.type.toUpperCase())) {
       _jsonObject.children.map((child: any) => {
         _stringToRender += createElement(child);
       });
@@ -21,7 +21,7 @@ function ChartInfoExtractor(_jsonObject: any): IChartInfo {
 
   if (_jsonObject != undefined) {
     chartArgs = {
-      title: (() => `Temperature readings for today : ${new Date(Date.now()).toLocaleDateString()}`)(),
+      title: (() => `${_jsonObject.label} readings for today : ${new Date(Date.now()).toLocaleDateString()}`)(),
       label: _jsonObject.label,
       bgColorRGBA: _jsonObject.bgColorRGBA,
       borderColorRGB: _jsonObject.borderColorRGB,
