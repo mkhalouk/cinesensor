@@ -17,6 +17,10 @@ app.use(
   })
 );
 
+// CORS
+const cors = require('cors');
+app.use(cors());
+
 //routes
 const userRouter = require("../routes/userRoutes");
 const generalRouter = require("../routes/generalRoutes");
