@@ -1,0 +1,18 @@
+{
+    "resource": "/user/login",
+    "params": {
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    },
+    "inputIdentifier": {
+        "username": "username_input",
+        "password": "password_input"
+    },
+    "messages" : {
+        "success" : "User logged successfully!",
+        "failure" : "Failed to login user :",
+        "error" : "Error logging in user:"
+    }
+}

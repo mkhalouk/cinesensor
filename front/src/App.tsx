@@ -1,18 +1,21 @@
 import { Component } from 'react'
 import { Navigate } from "react-router-dom";
-const loggedIn = true;
+import Cookies from 'js-cookie';
+
 
 class App extends Component {
+  private username: string | undefined;
   constructor(props: any) {
     super(props);
+    this.username = Cookies.get('username')
   }
 
   render() {
-    return (
-      <>
-        {loggedIn ? (<Navigate to="/dashboard" replace={true} />) : (<Navigate to="/login" replace={true} />)}
-      </>
-    )
+    if (this.username) {
+      return <Navigate to="/dashboard" replace={true} />;
+    } else {
+      return <Navigate to="/login" replace={true} />;
+    }
   }
 }
 
