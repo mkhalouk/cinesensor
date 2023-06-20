@@ -5,7 +5,7 @@ import ContainerBuilder from '../helpers/ContainerBuilder';
 import InputBuilder from '../helpers/InputBuilder';
 import React from 'react';
 
-export const createElement = (data: any, props: {}) => {
+export const createElement = (data: any, props: {}, __callback? : () => void) => {
   let _elementbuilder: any = null;
   const uniqueKey = data.label; // Generate unique key based on the element's label
 
@@ -26,8 +26,8 @@ export const createElement = (data: any, props: {}) => {
   }
   
   if(_elementbuilder != null) {
-    const element = _elementbuilder.buildJSXElementFromJson(data);
-    return React.cloneElement(element, { key: uniqueKey }); // Assign unique key to the element
+    const element = _elementbuilder.buildJSXElementFromJson(data, __callback!);
+    return React.cloneElement(element, { key: uniqueKey}); // Assign unique key to the element
   }
   else {
     // if no suitable builder is found, return null

@@ -8,9 +8,9 @@ class ContainerBuilder extends FormBuilder {
     super(props);
   }
 
-  buildJSXElementFromJson(data: string | any): any {
+  buildJSXElementFromJson(data: string | any, __callback : () => void): any {
     const style = super.buildCSSString(data.style);
-    const childElements = readFormElements(data.child, (data: any) => createElement(data, {}));
+    const childElements = readFormElements(data.child, (data: any) => createElement(data, {}, __callback));
 
     // Return a JSX div with children
     return (

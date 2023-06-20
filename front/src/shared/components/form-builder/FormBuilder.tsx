@@ -7,7 +7,7 @@ export abstract class FormBuilder extends Component{
   }
 
   // Provide a default implementation
-  buildJSXElementFromJson(data: string | any) : JSX.Element {
+  buildJSXElementFromJson(data: string | any, __callback : () => void) : JSX.Element {
     throw new Error('You have to implement the method buildJSXElementFromJson!');
   };
 
@@ -27,7 +27,7 @@ export abstract class FormBuilder extends Component{
   }
 
   render(): JSX.Element {
-    const jsxElement = this.buildJSXElementFromJson(this.props.data);
+    const jsxElement = this.buildJSXElementFromJson(this.props.data, () => null);
     return jsxElement;
   }
 }

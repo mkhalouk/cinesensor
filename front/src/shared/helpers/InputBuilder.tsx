@@ -6,7 +6,7 @@ class InputBuilder extends FormBuilder {
     super(props);
   }
 
-  buildJSXElementFromJson(data: any): any {
+  buildJSXElementFromJson(data: any, __callback : () => void): any {
     const sharedState = InputSharedState.getInstance();
 
     const { style, attributes } = data;
@@ -26,16 +26,15 @@ class InputBuilder extends FormBuilder {
       onChange: isSubmit ? undefined : (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         sharedState.setState({ [data.attributes.id]: value });
-        console.log(value);
       },
       onClick: isSubmit ? () => {
         const state = sharedState.getState();
         const value = state;
-        console.log(value);
+        __callback!()
       } : undefined
     };
 
-    const _inputElement = <input key={data.label} {...commonProps} {...inputProps} />
+    const _inputElement = <input  {...commonProps} {...inputProps} />
 
     return _inputElement;
   }
