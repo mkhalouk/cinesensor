@@ -8,13 +8,18 @@ import HumidityChartCard from '../../shared/components/chart-holder/humidity/Hum
 import PressureChartCard from '../../shared/components/chart-holder/pressure/PressureChartCard'
 import NoiseChartCard from '../../shared/components/chart-holder/noise/NoiseChartCard'
 import './DashBoard.css'
+import { Navigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 
 class DashBoard extends Component {
+    private username: string | undefined;
 
     constructor(props: any) {
         super(props);
         this.state = { elements: [] };
+        this.username = Cookies.get('username')
+
     }
 
     componentDidMount() {
@@ -26,29 +31,34 @@ class DashBoard extends Component {
     }
 
     render() {
-        return (
-            <>
-                <nav>
-                    <Header />
-                </nav>
-                <main>
-                    <div className="dataEditor">
-                        {this.state.elements}
+        if (!this.username) {
+            return <Navigate to="/login" replace={true} />;
+        } else {
+            return (
+                <>
+                    <nav>
+                        <Header />
+                    </nav>
+                    <main>
+                        <div className="dataEditor">
+                            {this.state.elements}
 
-                    </div>
+                        </div>
 
-                    <div className="chart-ctn">
-                        <div><TempChartCard /></div>
-                        <div><HumidityChartCard /></div>
-                        <div><PressureChartCard /></div>
-                        <div><NoiseChartCard /></div>
-                    </div>
-                </main>
-                <footer>
-                    <p>©Copyright 2050 by nobody. All rights reversed.</p>
-                </footer>
-            </>
-        )
+                        <div className="chart-ctn">
+                            <div><TempChartCard /></div>
+                            <div><HumidityChartCard /></div>
+                            <div><PressureChartCard /></div>
+                            <div><NoiseChartCard /></div>
+                        </div>
+                    </main>
+                    <footer>
+                        <p>©Copyright 2050 by nobody. All rights reversed.</p>
+                    </footer>
+                </>
+            )
+        }
+
     }
 }
 

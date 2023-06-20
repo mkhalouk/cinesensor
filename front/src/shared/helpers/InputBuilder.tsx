@@ -28,8 +28,6 @@ class InputBuilder extends FormBuilder {
         sharedState.setState({ [data.attributes.id]: value });
       },
       onClick: isSubmit ? () => {
-        const state = sharedState.getState();
-        const value = state;
         __callback!()
       } : undefined
     };
