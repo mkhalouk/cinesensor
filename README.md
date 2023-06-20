@@ -1,7 +1,7 @@
 # Description du système de capteurs :
 ## Type de capteurs
 Pour assurer le bien-être des cinéphiles, plusieurs capteurs pourraient être nécessaires. Notamment :
-- **Capteur de qualité de l'air** : Il peut mesurer plusieurs paramètres comme les PM2.5, PM10, CO2, COV (Composés Organiques Volatiles), température, humidité. Un exemple pourrait être le capteur BME680 de Bosch qui mesure la température, l'humidité, la pression et les COV.
+- **Capteur de qualité de l'air** : Il peut mesurer plusieurs paramètres comme les PM2.5/PM10 (Particules fines), CO2, COV (Composés Organiques Volatiles), température, humidité. Un exemple pourrait être le capteur BME680 de Bosch qui mesure la température, l'humidité, la pression et les COV.
 - **Capteur de bruit** : pour surveiller le niveau de bruit dans les salles et assurer une expérience de visionnage confortable.
 - **Capteur de lumière** : pour contrôler l'éclairage en fonction de la luminosité ambiante.
 
@@ -36,4 +36,3 @@ Un capteur de lumière est un dispositif capable de mesurer la luminosité de so
 
 - **Deux capteurs de lumière** : La plupart des capteurs de lumière sont équipés de deux détecteurs de lumière. L'un est sensible à l'ensemble du spectre, tandis que l'autre est principalement sensible à la lumière infrarouge.
 - **Conversion numérique** : Ils fournissent une sortie numérique, ce qui facilite l'intégration avec d'autres composants électroniques.
-- **Interface I2C** : Ces capteurs utilisent généralement l'interface I2C, ce qui signifie qu'ils peuvent être facilement connectés à la plupart des microcontrôleurs.
