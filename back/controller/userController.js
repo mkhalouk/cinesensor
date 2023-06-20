@@ -47,6 +47,7 @@ async function login(req, res, next) {
       if (await bcrypt.compare(password, user.password)) {
         // Save the session ID in the user document
         user.sessionId = req.session.id;
+        user.sessionCreatedAt = new Date().toISOString();
         await user.save();
 
         res.status(200).json({ message: 'Logged in successfully' });
@@ -92,6 +93,45 @@ async function getAllUsers(req, res, next) {
   }
 }
 
+async function editUser(req, res, next) {
+  try {
+    const { sessionId, sessionCreatedAt, username, email, password, isadmin, topic_token } = req.body;
+
+    // Find the user by username
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update only the fields that are not null
+    if (sessionId !== null) {
+      user.sessionId = sessionId;
+    }
+    if (sessionCreatedAt !== null) {
+      user.sessionCreatedAt = sessionCreatedAt;
+    }
+    if (email !== null) {
+      user.email = email;
+    }
+    if (password !== null) {
+      user.password = password;
+    }
+    if (isadmin !== null) {
+      user.isadmin = isadmin;
+    }
+    if (topic_token !== null) {
+      user.topic_token = topic_token;
+    }
+
+    // Save the updated user
+    await user.save();
+    res.status(200).json({ message: 'User updated successfully' });
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function getUserTopic(req, res, next) {
   try {
     const username = req.query.username;
@@ -110,4 +150,5 @@ module.exports = {
   logout,
   getAllUsers,
   getUserTopic,
+  editUser,
 };
