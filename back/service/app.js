@@ -23,6 +23,7 @@ app.use(cors());
 
 //routes
 const userRouter = require("../routes/userRoutes");
+const sensorDataRoutes = require("../routes/sensorDataRoutes");
 const generalRouter = require("../routes/generalRoutes");
 
 app.use(bodyParser.json());
@@ -33,6 +34,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/user', userRouter);
+app.use('/sensor', sensorDataRoutes);
 app.use('/', generalRouter);
 
 module.exports = { app, PORT };

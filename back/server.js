@@ -3,6 +3,7 @@ const { connectToDb } = require('./service/database');
 const cron = require('node-cron');
 const axios = require('axios');
 const { editUser, getAllUsers } = require('./controller/userController');
+const MQTTService = require('./service/mqttService');
 
 // Cron Job
 cron.schedule('*/13 * * * *', async function () {
@@ -55,13 +56,45 @@ cron.schedule('*/13 * * * *', async function () {
 
 });
 
-app.listen(PORT, (error) => {
+// MQTT service instance
+const mqttService = new MQTTService();
+
+// Connect to MQTT broker
+mqttService.connect();
+
+// Subscribe to the desired MQTT topic
+mqttService.subscribe('cinesensor/sensorsdata');
+
+// MQTT message callback
+mqttService.mqttClient.on("message", function (topic, message) {
+  // console.log('Received MQTT message:', message.toString());
+  // Save the received data
+  saveDataFromMQTT(topic, message.toString());
+});
+
+const saveDataFromMQTT = (topic, message) => {
+  // console.log('Saving data : ' + message);
+  const sensorData = {
+    topic: topic,
+    message: JSON.parse(message)
+  };
+
+  // Make a POST request to save the sensor data
+  axios.post(process.env.BACK_URL + 'sensor/savedata', sensorData)
+    .then(response => {
+      // console.log('Sensor data saved successfully.');
+    })
+    .catch(error => {
+      // console.error('Error saving sensor data:', error);
+    });
+};
+
+app.listen(PORT, async (error) => {
   if (!error) {
     // Connexion à la base de données
-    (async () => { await connectToDb(); })();
-    console.log("Server is Successfully Running, and App is listening on port " + PORT)
-  }
-  else {
+    await connectToDb();
+    console.log("Server is Successfully Running, and App is listening on port " + PORT);
+  } else {
     console.log("Error occurred, server can't start", error);
   }
 });
