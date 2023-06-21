@@ -22,7 +22,7 @@ app.listen(PORT, (error) => {
 		// Cron Job every 5 seconds to send data to backend server
 		cron.schedule('*/5 * * * * *', function () {
 			try {
-				axios.get(baseUrl + 'sensordata')
+				axios.get(`${baseUrl}/sensordata`)
 					.then(response => {
 						if (response.statusText == 'OK') {
 							const sensorData = response.data;
