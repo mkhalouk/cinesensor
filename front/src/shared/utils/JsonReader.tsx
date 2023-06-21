@@ -32,6 +32,14 @@ function ChartInfoExtractor(_jsonObject: any): IChartInfo {
   return chartArgs;
 }
 
+function isJsonString(str : string) : boolean {
+  try {
+      JSON.parse(str);
+  } catch (e) {
+      return false;
+  }
+  return true;
+}
 
 
 export type IChartInfo = {
@@ -42,4 +50,4 @@ export type IChartInfo = {
   pointColorRGB: string;
 }
 
-export { readFormElements, ChartInfoExtractor }
+export { readFormElements, ChartInfoExtractor, isJsonString }

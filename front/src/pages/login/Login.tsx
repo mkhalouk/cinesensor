@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { Component } from 'react'
 import { readFormElements } from '../../shared/utils/JsonReader';
 import data from '../../assets/json/login-form-v1.json';
@@ -26,7 +28,7 @@ class Login extends Component {
     }
 
     setCookieAndRedirect(key: string, value: string): void {
-        Cookies.set(key, value);
+        Cookies.set(key, value, {path : '/', sameSite : 'Strict'});
         this.setState({redirect: true});
     }
 

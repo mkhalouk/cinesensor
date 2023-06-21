@@ -1,51 +1,50 @@
 #root {
-    margin: 0;
-    width: 100vw;
-    height: 100vh;
-  }
-  
-  nav{
-    width: 100vw;
-    height: 10vh;
-  }
-  
-  main {
-    padding: 5vh 5vw;
-  }
-  
-  footer{
-  
-    color: #2c2c2c;
-  }
-  
-  .dataEditor img, .dataEditor button{
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+nav {
+  width: 100vw;
+  height: 10vh;
+}
+
+main {
+  padding: 5vh 5vw;
+}
+
+footer {
+
+  color: #2c2c2c;
+}
+
+.dataEditor img,
+.dataEditor button {
   display: inline-block;
   vertical-align: middle;
   margin-left: 1%;
-  }
-  
-  .chart-ctn{
-    margin: 20px auto;
-    display:grid;
-    grid-template-columns: auto auto;
-    grid-row: auto auto;
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
-    
-  
-  }
-  
-  .chart-ctn > div{
-    width: 40vw;
-    height: 40vh;
-    padding:20px;
-    border-radius:10px;
-    background-color: #fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:40px;
-    font-family:sans-serif;
-  }
-  
-  
+}
+
+.chart-ctn {
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-row: auto auto;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+
+
+}
+
+.chart-ctn>div {
+  width: 40vw;
+  height: 40vh;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  font-family: sans-serif;
+}
