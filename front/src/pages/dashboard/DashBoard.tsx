@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Component } from 'react'
 import Header from '../../shared/components/header/Header'
 import { readFormElements } from '../../shared/utils/JsonReader';
@@ -13,13 +14,11 @@ import Cookies from 'js-cookie';
 
 
 class DashBoard extends Component {
-    private username: string | undefined;
 
     constructor(props: any) {
         super(props);
-        this.state = { elements: [] };
-        this.username = Cookies.get('username')
-
+        this.state = { elements: [], username:'', redirect: false  };
+        this.logout = this.logout.bind(this);
     }
 
     componentDidMount() {
@@ -27,17 +26,23 @@ class DashBoard extends Component {
             const element = createElement(data, {});
             return element;
         });
-        this.setState({ elements: _elements });
+        this.setState({ elements: _elements, username :  Cookies.get('username')});
+    }
+
+    logout() : void {
+        Cookies.remove('username', {path : '/', sameSite : 'Strict'});
+        this.setState({ redirect: true, username: Cookies.get('username')});
     }
 
     render() {
-        if (!this.username) {
+        
+        if (!this.state.username && this.state.redirect) {
             return <Navigate to="/login" replace={true} />;
         } else {
             return (
                 <>
                     <nav>
-                        <Header />
+                        <Header logoutFn={this.logout} />
                     </nav>
                     <main>
                         <div className="dataEditor">

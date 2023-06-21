@@ -3,16 +3,11 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import DashBoard from './pages/dashboard/DashBoard.tsx';
 import Login from './pages/login/Login.tsx'
 import App from './App.tsx'
 import './index.css'
 
 const router = createBrowserRouter([
-    {
-        path: "/dashboard",
-        element: <DashBoard />,
-    },
     {
         path: "/login",
         element: <Login />,
@@ -21,7 +16,13 @@ const router = createBrowserRouter([
         path: "/",
         element: <App />,
     },
+    {
+        path: "/dashboard",
+        element: <App />,
+    },
 ]);
+
+router._internalSetRoutes
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <RouterProvider router={router} future={{ v7_startTransition: true }} />

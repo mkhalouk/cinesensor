@@ -1,6 +1,8 @@
 import { Component } from 'react'
 import { Navigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+import DashBoard from './pages/dashboard/DashBoard';
+import MqttService from './services/MqttService';
 
 
 class App extends Component {
@@ -10,9 +12,14 @@ class App extends Component {
     this.username = Cookies.get('username')
   }
 
+  componentDidMount(): void {
+    const mqttService = new MqttService();
+    mqttService.initMqttClient();
+  }
+
   render() {
     if (this.username) {
-      return <Navigate to="/dashboard" replace={true} />;
+      return <DashBoard/>;
     } else {
       return <Navigate to="/login" replace={true} />;
     }

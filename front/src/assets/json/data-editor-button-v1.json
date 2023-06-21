@@ -6,7 +6,7 @@
             "label": "data-editor-image",
             "type": "image",
             "properties": {
-                "src": "./src/assets/images/rotated-right-arrow-svgrepo-com.svg",
+                "src": "./src/assets/images/rotated-right-arrow.svg",
                 "alt": "The image is not available"
             },
             "style": {}

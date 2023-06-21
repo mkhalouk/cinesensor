@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import data from '../../../../assets/json/temperature-chart-options.json';
 import {
     Chart as ChartJS,

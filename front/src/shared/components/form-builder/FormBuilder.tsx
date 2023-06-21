@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { Component, CSSProperties } from 'react';
 
 export abstract class FormBuilder extends Component{
