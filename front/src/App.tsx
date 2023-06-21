@@ -12,9 +12,11 @@ class App extends Component {
     this.username = Cookies.get('username')
   }
 
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     const mqttService = new MqttService();
-    mqttService.initMqttClient();
+    await mqttService.initMqttClient();
+    await mqttService.connect().then(() => this.setState({}));
+    await mqttService.subscribe().then(() => this.setState({}));
   }
 
   render() {

@@ -9,8 +9,9 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
-import { faker } from '@faker-js/faker';
-import { IChartInfo } from '../../utils/JsonReader';
+import { ChartInfoExtractor, IChartInfo } from '../../utils/JsonReader';
+import MqttService from '../../../services/MqttService';
+import { Line } from 'react-chartjs-2';
 
 
 ChartJS.register(
@@ -23,14 +24,45 @@ ChartJS.register(
     Legend,
 );
 
+
+
 class ChartCard extends Component<{}, IChartCardState> {
 
 
     constructor(props: any) {
         super(props);
+
+        this.state = {
+            labels: [],
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: '',
+                        data: [],
+                        borderColor: `rgb`,
+                        backgroundColor: `rgba`,
+                        pointBackgroundColor: `rgb`,
+                        pointBorderColor: `rgb`,
+                        pointHoverBackgroundColor: `rgb`,
+                        pointHoverBorderColor: `rgb$`,
+                    }
+                ]
+            },
+        };
     }
 
-    initialize(): void {
+    componentDidMount(): void {
+
+        const chartInfo: IChartInfo = this.initialize();
+        this.update(chartInfo);
+    }
+
+    initialize(): IChartInfo {
+        const options = this.props.options;
+
+        const chartInfo: IChartInfo = ChartInfoExtractor(options);
+        options.plugins.title.text = chartInfo.title;
         this.setState(prevState => {
             return {
                 labels: (() => {
@@ -38,13 +70,31 @@ class ChartCard extends Component<{}, IChartCardState> {
                         prevState.labels.push(Idx.toString());
                     }
                     return prevState.labels;
-                })()
+                })(),
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: chartInfo.label,
+                            data: [],
+                            borderColor: `rgb${chartInfo.borderColorRGB}`,
+                            backgroundColor: `rgba${chartInfo.bgColorRGBA}`,
+                            pointBackgroundColor: `rgb${chartInfo.pointColorRGB}`,
+                            pointBorderColor: `rgb${chartInfo.pointColorRGB}`,
+                            pointHoverBackgroundColor: `rgb${chartInfo.pointColorRGB}`,
+                            pointHoverBorderColor: `rgb${chartInfo.pointColorRGB}`,
+                        }
+                    ]
+                },
             };
         });
+        return chartInfo;
     }
 
-    update(chartInfo : IChartInfo): number {
-        return setInterval(() => {
+    async update(chartInfo: IChartInfo): Promise<void> {
+        const mqttService = new MqttService();
+        await mqttService.onMessage((topic, message) => {
+
             this.setState(prevState => {
                 return {
                     labels: (() => {
@@ -63,7 +113,7 @@ class ChartCard extends Component<{}, IChartCardState> {
                                     if (prevState.data?.datasets[0].data.length >= prevState.labels.length) {
                                         prevState.data?.datasets[0].data.shift();
                                     }
-                                    prevState.data?.datasets[0].data.push(faker.number.int({ min: 0, max: 100 }));
+                                    prevState.data?.datasets[0].data.push(JSON.parse(message.toString()).sensor[this.props.label]);
                                     return prevState.data?.datasets[0].data;
                                 })(),
                                 borderColor: `rgb${chartInfo.borderColorRGB}`,
@@ -77,12 +127,13 @@ class ChartCard extends Component<{}, IChartCardState> {
                     }
                 }
             });
-        }, 5000);
+        });
     }
 
     render() {
         return (
             <>
+                <Line options={this.props.options} data={this.state.data} />;
             </>
         )
     }

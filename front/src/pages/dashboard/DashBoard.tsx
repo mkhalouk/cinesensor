@@ -11,6 +11,14 @@ import NoiseChartCard from '../../shared/components/chart-holder/noise/NoiseChar
 import './DashBoard.css'
 import { Navigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import ChartCard from '../../shared/components/chart-holder/ChartCard';
+import temperatureOptions from '../../assets/json/temperature-chart-options.json';
+import humidityOptions from '../../assets/json/humidity-chart-options.json';
+import pressureOptions from '../../assets/json/pressure-chart-options.json';
+import noiseOptions from '../../assets/json/noise-chart-options.json';
+
+
+
 
 
 class DashBoard extends Component {
@@ -51,10 +59,10 @@ class DashBoard extends Component {
                         </div>
 
                         <div className="chart-ctn">
-                            <div><TempChartCard /></div>
-                            <div><HumidityChartCard /></div>
-                            <div><PressureChartCard /></div>
-                            <div><NoiseChartCard /></div>
+                            <div><ChartCard label={'temperature'} options={temperatureOptions} /></div>
+                            <div><ChartCard label={'humidity'} options={humidityOptions} /></div>
+                            <div><ChartCard label={'noise'} options={noiseOptions} /></div>
+                            <div><ChartCard label={'pressure'} options={pressureOptions} /></div>
                         </div>
                     </main>
                     <footer>
