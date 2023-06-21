@@ -1,4 +1,5 @@
 import MqttConnectionManager from "../shared/helpers/data/MqttConnectionManager";
+import { isJsonString } from "../shared/utils/JsonReader";
 
 class MqttService {
     async initMqttClient() : Promise<MqttConnectionManager> {
