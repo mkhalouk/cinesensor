@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import Header from '../../shared/components/header/Header';
-import { readFormElements } from '../../shared/utils/JsonReader';
+import { readWidgetElements } from '../../shared/utils/JsonReader';
 import data from '../../assets/json/data-editor-button-v1.json';
 import { createElement } from '../../shared/utils/ElementCreator';
 import './DashBoard.css';
@@ -26,7 +26,7 @@ class DashBoard extends Component<{}, DashboardState> {
   }
 
   componentDidMount() {
-    const _elements = readFormElements(data, (data: any) => {
+    const _elements = readWidgetElements(data, (data: any) => {
       const element = createElement(data, {});
       return element;
     });

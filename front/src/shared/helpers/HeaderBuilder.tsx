@@ -1,7 +1,7 @@
 import React from 'react';
-import { FormBuilder } from "../components/form-builder/FormBuilder";
+import { WidgetBuilder } from "../components/widget-builder/WidgetBuilder";
 
-class HeaderBuilder extends FormBuilder {
+class HeaderBuilder extends WidgetBuilder {
     constructor(props: any) {
         super(props);
     }

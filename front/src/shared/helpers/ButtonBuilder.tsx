@@ -1,6 +1,6 @@
-import { FormBuilder } from "../components/form-builder/FormBuilder";
+import { WidgetBuilder } from "../components/widget-builder/WidgetBuilder";
 
-class ButtonBuilder extends FormBuilder {
+class ButtonBuilder extends WidgetBuilder {
   constructor(props: any) {
     super(props);
   }

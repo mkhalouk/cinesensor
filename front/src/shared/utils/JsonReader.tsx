@@ -1,5 +1,5 @@
 
-function readFormElements(_jsonObject: any, createElement: (data: any, __callback? : () => void ) => any): JSX.Element[] {
+function readWidgetElements(_jsonObject: any, createElement: (data: any, __callback? : () => void ) => any): JSX.Element[] {
   let _elementsToRender : any[] = [];
   if (_jsonObject != undefined) {
     if (["OBJECT", "STACK", "COLUMN", "R0W"].includes(_jsonObject.type.toUpperCase())) {
@@ -50,4 +50,4 @@ export type IChartInfo = {
   pointColorRGB: string;
 }
 
-export { readFormElements, ChartInfoExtractor, isJsonString }
+export { readWidgetElements, ChartInfoExtractor, isJsonString }

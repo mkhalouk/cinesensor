@@ -1,16 +1,16 @@
 import React from 'react';
-import { FormBuilder } from "../components/form-builder/FormBuilder";
+import { WidgetBuilder } from "../components/widget-builder/WidgetBuilder";
 import { createElement } from "../utils/ElementCreator"; // correct import paths
-import { readFormElements } from "../utils/JsonReader"; // correct import paths
+import { readWidgetElements } from "../utils/JsonReader"; // correct import paths
 
-class ContainerBuilder extends FormBuilder {
+class ContainerBuilder extends WidgetBuilder {
   constructor(props: any) {
     super(props);
   }
 
   buildJSXElementFromJson(data: string | any, __callback : () => void): any {
     const style = super.buildCSSString(data.style);
-    const childElements = readFormElements(data.child, (data: any) => createElement(data, {}, __callback));
+    const childElements = readWidgetElements(data.child, (data: any) => createElement(data, {}, __callback));
 
     // Return a JSX div with children
     return (
