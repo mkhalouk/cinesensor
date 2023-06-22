@@ -1,13 +1,13 @@
 import { Component, CSSProperties } from 'react';
 
-interface FormBuilderProps {
+interface WidgetBuilderProps {
   data: string | any;
 }
 
-interface FormBuilderState {}
+interface WidgetBuilderState {}
 
-export abstract class FormBuilder extends Component<FormBuilderProps, FormBuilderState> {
-  constructor(props: FormBuilderProps) {
+export abstract class WidgetBuilder extends Component<WidgetBuilderProps, WidgetBuilderState> {
+  constructor(props: WidgetBuilderProps) {
     super(props);
   }
 

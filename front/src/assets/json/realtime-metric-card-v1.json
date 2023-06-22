@@ -1,0 +1,111 @@
+{
+    "label": "metric-card",
+    "type": "object",
+    "children": [
+        {
+            "label": "login-form-container",
+            "type": "container",
+            "style": {
+                "margin-left": "38%",
+                "margin-right": "38%",
+                "margin-top": "10%",
+                "background-color": "white",
+                "border": "2px solid #303030",
+                "border-radius": "15px",
+                "padding": "2%"
+            },
+            "child": {
+                "label": "login-form-column",
+                "type": "column",
+                "children": [
+                    {
+                        "label": "login-form-header",
+                        "type": "header",
+                        "tag": "h1",
+                        "value": "LOG IN",
+                        "style": {
+                            "width": "auto",
+                            "color": "#303030",
+                            "text-align": "center",
+                            "font-weight": "600",
+                            "font-size": "2.5em"
+                        }
+                    },
+                    {
+                        "label": "login-form-username-input",
+                        "type": "input",
+                        "attributes": {
+                            "id" : "username_input",
+                            "type" : "text",
+                            "name" : "username",
+                            "placeholder" : "Username"
+                        },
+                        "style": {
+                            "position": "relative",
+                            "left" : "10%",
+                            "width": "80%",
+                            "height" : "5vh",
+                            "background-color" : "white",
+                            "outline" : "none",
+                            "color": "#303030",
+                            "border": "2px solid #303030",
+                            "border-radius": "5px",
+                            "font-size": "1em",
+                            "margin-bottom": "2vh"
+                        }
+                    },
+                    {
+                        "label": "login-form-password-input",
+                        "type": "input",
+                        "attributes": {
+                            "id" : "password_input",
+                            "type" : "password",
+                            "name" : "password",
+                            "placeholder" : "Password"
+                        },
+                        "style": {
+                            "position": "relative",
+                            "left" : "10%",
+                            "width": "80%",
+                            "height" : "5vh",
+                            "background-color" : "white",
+                            "outline" : "none",
+                            "color": "#303030",
+                            "border": "2px solid #303030",
+                            "border-radius": "5px",
+                            "font-size": "1em",
+                            "margin-bottom": "2vh"
+
+                        }
+                    },
+                    {
+                        "label": "login-form-submit-input",
+                        "type": "input",
+                        "attributes": {
+                            "id" : "submit_input",
+                            "type" : "submit",
+                            "value" : "Submit"
+                        },
+                        "events": {
+                            "onclick" : "handleClick_2a8ad9ebae0b()"
+                        },
+                        "style": {
+                            "position": "relative",
+                            "left" : "10%",
+                            "width": "80%",
+                            "height" : "5vh",
+                            "background-color" : "#5884ff",
+                            "outline" : "none",
+                            "color": "white",
+                            "border": "2px solid #5884ff",
+                            "border-radius": "5px",
+                            "font-size": "1em",
+                            "cursor" : "pointer",
+                            "margin-bottom": "2vh"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

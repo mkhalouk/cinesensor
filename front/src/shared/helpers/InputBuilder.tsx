@@ -1,7 +1,7 @@
 import InputSharedState from "./data/InputSharedState";
-import { FormBuilder } from "../components/form-builder/FormBuilder";
+import { WidgetBuilder } from "../components/widget-builder/WidgetBuilder";
 
-class InputBuilder extends FormBuilder {
+class InputBuilder extends WidgetBuilder {
   constructor(props: any) {
     super(props);
   }
