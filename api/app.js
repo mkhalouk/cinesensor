@@ -15,6 +15,25 @@ app.use('/', generalRouter);
 // services
 const mqttService = new MQTTService();
 
+// Cron job for the api not to hibernate
+cron.schedule('*/13 * * * *', async function () {
+	try {
+		// In order that the api stays alive (Render cloud application)
+		axios.get(process.env.API_URL + 'checkApi')
+			.then(response => {
+				if (response.statusText == 'OK') {
+					console.log(response.data.message);
+				}
+			})
+			.catch(error => {
+				console.error('Error calling api', error);
+			});
+	} catch (error) {
+		console.error('Error in cron job:', error);
+	}
+
+});
+
 app.listen(PORT, (error) => {
 	// Connect to MQTT broker
 	mqttService.connect();
