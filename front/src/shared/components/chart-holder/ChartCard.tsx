@@ -74,7 +74,7 @@ class ChartCard extends Component<ChartCardProps, ChartCardState> {
   }
 
   initialize(): IChartInfo {
-    const options : any = this.props.identifier;
+    const options : any = this.props.options;
 
     const chartInfo: IChartInfo = ChartInfoExtractor(options);
     options.plugins.title.text = chartInfo.title;
