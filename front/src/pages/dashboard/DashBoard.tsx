@@ -14,6 +14,9 @@ import noiseOptions from '../../assets/json/noise-chart-options.json';
 import MetricCard from '../../shared/components/metric-card/MetricCard';
 import { BehaviorSubject } from 'rxjs';
 import MqttService from '../../services/MqttService';
+import UserServiceImpl from '../../services/impl/UserServiceImpl';
+import serviceData from '../../assets/json/dataservice/metric-service-data.json';
+
 
 interface DashboardState {
   elements: any[];
@@ -30,9 +33,15 @@ class DashBoard extends Component<{}, DashboardState> {
   }
 
   async componentDidMount() {
-    const _elements = readWidgetElements(data, (data: any) => {
+    let _elements : any = '';
+    _elements = readWidgetElements(data, (data: any) => {
       const element = createElement(data, {});
       return element;
+    });
+    const userService = new UserServiceImpl();
+    const results = await userService.latestReadings(serviceData);
+    results.map((result : any) => {
+      console.log(JSON.stringify(result))
     });
     const mqttService = new MqttService();
     await mqttService.onMessage((__topic, message) => {
@@ -56,7 +65,6 @@ class DashBoard extends Component<{}, DashboardState> {
             <Header logoutFn={this.logout} />
           </nav>
           <main>
-            <div className="dataEditor">{this.state.elements}</div>
             <div className='metric-card-ctn'>
               <MetricCard icon={"temperature-half"} subject={this.state.subject} identifier={'temperature'} options={temperatureOptions}/>
               <MetricCard icon={"droplet"} subject={this.state.subject} identifier={'humidity'} options={temperatureOptions}/>

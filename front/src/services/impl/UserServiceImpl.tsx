@@ -1,10 +1,10 @@
 import InputSharedState from '../../shared/helpers/data/InputSharedState';
 import { AUserBuilder, User } from '../../entities/User';
-import ILoginService from '../ILoginService';
+import IUserService from '../IUserService';
 
 const URL = import.meta.env.VITE_BACKEND_URL_PREFIX;
 
-class LoginServiceImpl implements ILoginService {
+class UserServiceImpl implements IUserService {
 
   async login(serviceData: any, setCookieAndRedirectFn: (name: string, value: string, options?: any) => void): Promise<boolean> {
     const sharedState = InputSharedState.getInstance();
@@ -31,6 +31,25 @@ class LoginServiceImpl implements ILoginService {
     }
     return true;
   }
+
+  async latestReadings(serviceData: any) : Promise<any> {
+    let result : any;
+    try {
+      const response = await fetch(`${URL}${serviceData.resource}`, {
+        ...serviceData.params,
+      });
+      result = await response.json()
+      if (result) {
+        console.log(result);
+      } else {
+        console.log(serviceData.messages.failure);
+      }
+    } catch (error) {
+      console.error(serviceData.messages.error, error);
+    }
+    return result;
+  }
+
 }
 
-export default LoginServiceImpl;
+export default UserServiceImpl;

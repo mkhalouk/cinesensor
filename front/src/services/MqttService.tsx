@@ -1,19 +1,28 @@
 import MqttConnectionManager from "../shared/helpers/data/MqttConnectionManager";
 
+const PROTOCOL = import.meta.env.VITE_MQTT_PROTOCOL_PREFIX;
+const USERNAME = import.meta.env.VITE_MQTT_USERNAME_PREFIX;
+const PASSWORD = import.meta.env.VITE_MQTT_PASSWORD_PREFIX;
+const HOST = import.meta.env.VITE_MQTT_HOST_PREFIX;
+const PORT = import.meta.env.VITE_MQTT_PORT_PREFIX;
+const RESOURCE = import.meta.env.VITE_MQTT_RESOURCE_PREFIX;
+const TOPIC = import.meta.env.VITE_MQTT_TOPIC_PREFIX
+
+
 class MqttService {
     async initMqttClient() : Promise<MqttConnectionManager> {
         const options = {
-            protocol: 'wss',
-            username: 'mkhalouk',
-            password: 'mkhalouk',
+            protocol: PROTOCOL,
+            username: USERNAME,
+            password: PASSWORD,
             wsOptions: {
-                host: 'fce85f7acde44e06b48fc42411abf0e8.s2.eu.hivemq.cloud',
-                protocol: 'wss',
+                host: HOST,
+                protocol: PROTOCOL,
                 rejectUnauthorized: false, // Disable SSL/TLS certificate validation
             },
         };
         return MqttConnectionManager.getInstance(
-            'wss://fce85f7acde44e06b48fc42411abf0e8.s2.eu.hivemq.cloud:8884/mqtt',
+            `${PROTOCOL}://${HOST}:${PORT}/${RESOURCE}`,
             options
         );
     }
@@ -25,7 +34,7 @@ class MqttService {
 
     async subscribe() {
         const mqttConnetionManager = await this.initMqttClient();
-        mqttConnetionManager.subscribe('cinesensor/sensorsdata')
+        mqttConnetionManager.subscribe(TOPIC)
     }
 
     async onMessage(__callback : (...args: any) => void) {

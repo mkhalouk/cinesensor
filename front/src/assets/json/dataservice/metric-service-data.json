@@ -1,0 +1,14 @@
+{
+    "resource": "/sensor/get12",
+    "params": {
+        "method": "GET",
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    },
+    "messages" : {
+        "success" : "Metrics fetched successfully!",
+        "failure" : "Failed to fetch metrics :",
+        "error" : "Error in fetching metrics:"
+    }
+}

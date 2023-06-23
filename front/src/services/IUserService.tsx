@@ -1,5 +1,5 @@
-interface ILoginService {
+interface IUserService {
     login(data : any, setCookieFn: (name: string, value: string, options?: any) => void) : Promise<boolean>;
 }
 
-export default ILoginService;
+export default IUserService;
