@@ -1,0 +1,68 @@
+
+
+.metric-card {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 20vw !important;
+    height: 20vh !important;
+    background-color: #fff;
+    margin-right: 2%;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    color: #3d3d3d;
+    padding: 2vh 4vw !important;
+}
+
+.metric-card:nth-child(1) {
+    margin-left: 2%;
+    background-color: rgba(255, 145, 82, .1);
+    border-color: rgb(255, 145, 82);
+}
+
+.metric-card:nth-child(2) {
+    background-color: rgba(37, 162, 68, .1);
+    border-color: rgb(37, 162, 68);
+}
+
+.metric-card:nth-child(3) {
+    background-color: rgba(114, 9, 183, .1);
+    border-color: rgb(114, 9, 183);
+
+}
+
+.metric-card:nth-child(4) {
+    background-color: rgba(33, 150, 243, .1);
+    border-color: rgb(33, 150, 243);
+}
+
+.metric-card * {
+    margin: auto;
+    display: grid;
+    padding: 0px;
+    text-align: center;
+    margin-top: 1vh;
+}
+
+.metric-card > *:nth-child(1) {
+color: #aaaaaa;
+}
+
+.metric-card h1 {
+    font-size: 1.56em;
+    font-weight: 600;
+    width: fit-content;
+    text-align: center;
+}
+
+.metric-card h1:nth-child(2) {
+    font-size: 2em;
+
+}
+
+.metric-card h3 {
+    font-size: 1em;
+    font-weight: 300;
+    width: fit-content;
+    text-align: center;
+}

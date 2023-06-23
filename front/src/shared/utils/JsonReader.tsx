@@ -1,14 +1,27 @@
 
-function readWidgetElements(_jsonObject: any, createElement: (data: any, __callback? : () => void ) => any): JSX.Element[] {
-  let _elementsToRender : any[] = [];
+function readWidgetElements(_jsonObject: any, createElement: (data: any, __callback?: () => void) => any): JSX.Element[] {
+  let _elementsToRender: any[] = [];
   if (_jsonObject != undefined) {
     if (["OBJECT", "STACK", "COLUMN", "R0W"].includes(_jsonObject.type.toUpperCase())) {
       _jsonObject.children.map((child: any) => {
-        _elementsToRender.push(createElement(child));
+        const styledChild = setLayoutStyle(child, _jsonObject.type.toUpperCase())
+        _elementsToRender.push(createElement(styledChild));
       });
     }
   }
   return _elementsToRender;
+}
+
+function setLayoutStyle(child: any, layout: string) : any{
+  switch (layout) {
+    case "COLUMN":
+      child.style.display = "grid";
+      break;
+    case "ROW":
+      child.style.display = "inline-block";
+      break;
+  }
+  return child;
 }
 
 function ChartInfoExtractor(_jsonObject: any): IChartInfo {
@@ -32,11 +45,11 @@ function ChartInfoExtractor(_jsonObject: any): IChartInfo {
   return chartArgs;
 }
 
-function isJsonString(str : string) : boolean {
+function isJsonString(str: string): boolean {
   try {
-      JSON.parse(str);
+    JSON.parse(str);
   } catch (e) {
-      return false;
+    return false;
   }
   return true;
 }

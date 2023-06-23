@@ -43,7 +43,7 @@
       }
     }
   },
-  "label": "Temperature",
+  "label": "Temperature in C°",
   "bgColorRGBA": "(255, 145, 82, .5)",
   "borderColorRGB": "(252, 182, 83)",
   "pointColorRGB": "(255, 84, 84)"

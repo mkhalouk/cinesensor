@@ -43,7 +43,7 @@
         }
       }
     },
-    "label": "Humidity",
+    "label": "Humidity in %",
     "bgColorRGBA": "(37, 162, 68, .5)",
     "borderColorRGB": "(26, 116, 49)",
     "pointColorRGB": "(16, 69, 29)"

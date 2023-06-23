@@ -25,6 +25,14 @@ footer {
   margin-left: 1%;
 }
 
+.metric-card-ctn {
+  height: fit-content;
+}
+
+.metric-card-ctn > * {
+  display: inline-block;
+}
+
 .chart-ctn {
   margin: 20px auto;
   display: grid;

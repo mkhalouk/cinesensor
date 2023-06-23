@@ -9,9 +9,9 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { ChartInfoExtractor, IChartInfo } from '../../utils/JsonReader';
-import MqttService from '../../../services/MqttService';
+import { ChartInfoExtractor, IChartInfo, isJsonString } from '../../utils/JsonReader';
 import { Line } from 'react-chartjs-2';
+import { BehaviorSubject } from 'rxjs';
 
 ChartJS.register(
   CategoryScale,
@@ -26,6 +26,7 @@ ChartJS.register(
 interface ChartCardProps {
   identifier: string;
   options: any;
+  subject: BehaviorSubject<any>;
 }
 
 interface ChartCardState {
@@ -66,16 +67,57 @@ class ChartCard extends Component<ChartCardProps, ChartCardState> {
         ],
       },
     };
+    this.update = this.update.bind(this);
+
   }
 
   componentDidMount(): void {
-    const chartInfo: IChartInfo = this.initialize();
-    this.update(chartInfo);
+    this.initialize();
+    this.props.subject.subscribe(this.update)
   }
 
-  initialize(): IChartInfo {
-    const options : any = this.props.options;
+  update(message: any): void {
+    const options: any = this.props.options;
+    const chartInfo: IChartInfo = ChartInfoExtractor(options);
+    this.setState((prevState) => {
+      return {
+        labels: (() => {
+          if (prevState.data?.datasets[0].data.length >= prevState.labels.length) {
+            prevState.labels.push(prevState.labels[0]);
+            prevState.labels.shift();
+          }
+          return prevState.labels;
+        })(),
+        data: {
+          labels: prevState.labels,
+          datasets: [
+            {
+              label: chartInfo.label,
+              data: (() => {
+                if (prevState.data?.datasets[0].data.length >= prevState.labels.length) {
+                  prevState.data?.datasets[0].data.shift();
+                }
+                prevState.data?.datasets[0].data.push(
+                  isJsonString(message.toString()) ? JSON.parse(message.toString())?.sensor[this.props.identifier] : undefined
+                );
+                return prevState.data?.datasets[0].data;
+              })(),
+              borderColor: `rgb${chartInfo.borderColorRGB}`,
+              backgroundColor: `rgba${chartInfo.bgColorRGBA}`,
+              pointBackgroundColor: `rgb${chartInfo.pointColorRGB}`,
+              pointBorderColor: `rgb${chartInfo.pointColorRGB}`,
+              pointHoverBackgroundColor: `rgb${chartInfo.pointColorRGB}`,
+              pointHoverBorderColor: `rgb${chartInfo.pointColorRGB}`,
+            },
+          ],
+        },
+      };
+    });
+  }
 
+
+  initialize(): void {
+    const options: any = this.props.options;
     const chartInfo: IChartInfo = ChartInfoExtractor(options);
     options.plugins.title.text = chartInfo.title;
     this.setState(() => {
@@ -104,48 +146,9 @@ class ChartCard extends Component<ChartCardProps, ChartCardState> {
         },
       };
     });
-    return chartInfo;
   }
 
-  async update(chartInfo: IChartInfo): Promise<void> {
-    const mqttService = new MqttService();
-    await mqttService.onMessage((__topic, message) => {
-      this.setState((prevState) => {
-        return {
-          labels: (() => {
-            if (prevState.data?.datasets[0].data.length >= prevState.labels.length) {
-              prevState.labels.push(prevState.labels[0]);
-              prevState.labels.shift();
-            }
-            return prevState.labels;
-          })(),
-          data: {
-            labels: prevState.labels,
-            datasets: [
-              {
-                label: chartInfo.label,
-                data: (() => {
-                  if (prevState.data?.datasets[0].data.length >= prevState.labels.length) {
-                    prevState.data?.datasets[0].data.shift();
-                  }
-                  prevState.data?.datasets[0].data.push(
-                    JSON.parse(message.toString()).sensor[this.props.identifier]
-                  );
-                  return prevState.data?.datasets[0].data;
-                })(),
-                borderColor: `rgb${chartInfo.borderColorRGB}`,
-                backgroundColor: `rgba${chartInfo.bgColorRGBA}`,
-                pointBackgroundColor: `rgb${chartInfo.pointColorRGB}`,
-                pointBorderColor: `rgb${chartInfo.pointColorRGB}`,
-                pointHoverBackgroundColor: `rgb${chartInfo.pointColorRGB}`,
-                pointHoverBorderColor: `rgb${chartInfo.pointColorRGB}`,
-              },
-            ],
-          },
-        };
-      });
-    });
-  }
+
 
   render() {
     return (

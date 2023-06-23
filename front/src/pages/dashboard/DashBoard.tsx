@@ -11,24 +11,32 @@ import temperatureOptions from '../../assets/json/temperature-chart-options.json
 import humidityOptions from '../../assets/json/humidity-chart-options.json';
 import pressureOptions from '../../assets/json/pressure-chart-options.json';
 import noiseOptions from '../../assets/json/noise-chart-options.json';
+import MetricCard from '../../shared/components/metric-card/MetricCard';
+import { BehaviorSubject } from 'rxjs';
+import MqttService from '../../services/MqttService';
 
 interface DashboardState {
   elements: any[];
   username?: string;
   redirect: boolean;
+  subject : BehaviorSubject<string>;
 }
 
 class DashBoard extends Component<{}, DashboardState> {
   constructor(props: {}) {
     super(props);
-    this.state = { elements: [], username: '', redirect: false };
+    this.state = { elements: [], username: '', redirect: false, subject : new BehaviorSubject('') };
     this.logout = this.logout.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const _elements = readWidgetElements(data, (data: any) => {
       const element = createElement(data, {});
       return element;
+    });
+    const mqttService = new MqttService();
+    await mqttService.onMessage((__topic, message) => {
+      this.state.subject.next(message);
     });
     this.setState({ elements: _elements, username: Cookies.get('username') });
   }
@@ -49,19 +57,24 @@ class DashBoard extends Component<{}, DashboardState> {
           </nav>
           <main>
             <div className="dataEditor">{this.state.elements}</div>
-
+            <div className='metric-card-ctn'>
+              <MetricCard icon={"temperature-half"} subject={this.state.subject} identifier={'temperature'} options={temperatureOptions}/>
+              <MetricCard icon={"droplet"} subject={this.state.subject} identifier={'humidity'} options={temperatureOptions}/>
+              <MetricCard icon={"volume-up"} subject={this.state.subject} identifier={'noise'} options={temperatureOptions}/>
+              <MetricCard icon={"wind"} subject={this.state.subject} identifier={'pressure'} options={temperatureOptions}/>
+            </div>
             <div className="chart-ctn">
               <div>
-                <ChartCard identifier={'temperature'} options={temperatureOptions} />
+                <ChartCard subject={this.state.subject} identifier={'temperature'} options={temperatureOptions} />
               </div>
               <div>
-                <ChartCard identifier={'humidity'} options={humidityOptions} />
+                <ChartCard subject={this.state.subject} identifier={'humidity'} options={humidityOptions} />
               </div>
               <div>
-                <ChartCard identifier={'noise'} options={noiseOptions} />
+                <ChartCard subject={this.state.subject} identifier={'noise'} options={noiseOptions} />
               </div>
               <div>
-                <ChartCard identifier={'pressure'} options={pressureOptions} />
+                <ChartCard subject={this.state.subject} identifier={'pressure'} options={pressureOptions} />
               </div>
             </div>
           </main>

@@ -43,7 +43,7 @@
         }
       }
     },
-    "label": "Pressure",
+    "label": "Pressure in hPa",
     "bgColorRGBA": "(33, 150, 243, .5)",
     "borderColorRGB": "(21, 101, 192)",
     "pointColorRGB": "(13, 71, 161)"
