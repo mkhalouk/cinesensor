@@ -41,9 +41,12 @@ class MetricCard extends Component<MetricCardProps, MetricCardState> {
   }
 
   update(_message : any) : void {
+    const mqttData = isJsonString(_message.toString()) ? JSON.parse(_message.toString())?.sensor: undefined;
+    const apiData =  isJsonString(_message) ? JSON.parse(_message) : undefined;
+    let data = !mqttData ? apiData : mqttData;
     this.setState((prevState) => {
       return {
-        currentReading : isJsonString(_message.toString()) ? JSON.parse(_message.toString())?.sensor[this.props.identifier] : undefined,
+        currentReading : !data ? data : data[this.props.identifier],
         lastReading : prevState.currentReading
       }
     })

@@ -41,7 +41,7 @@ class DashBoard extends Component<{}, DashboardState> {
     const userService = new UserServiceImpl();
     const results = await userService.latestReadings(serviceData);
     results.map((result : any) => {
-      console.log(JSON.stringify(result))
+      this.state.subject.next(JSON.stringify(result));
     });
     const mqttService = new MqttService();
     await mqttService.onMessage((__topic, message) => {

@@ -77,6 +77,9 @@ class ChartCard extends Component<ChartCardProps, ChartCardState> {
   }
 
   update(message: any): void {
+    const mqttData = isJsonString(message.toString()) ? JSON.parse(message.toString())?.sensor: undefined;
+    const apiData =  isJsonString(message) ? JSON.parse(message) : undefined;
+    let data = !mqttData ? apiData : mqttData;
     const options: any = this.props.options;
     const chartInfo: IChartInfo = ChartInfoExtractor(options);
     this.setState((prevState) => {
@@ -97,9 +100,7 @@ class ChartCard extends Component<ChartCardProps, ChartCardState> {
                 if (prevState.data?.datasets[0].data.length >= prevState.labels.length) {
                   prevState.data?.datasets[0].data.shift();
                 }
-                prevState.data?.datasets[0].data.push(
-                  isJsonString(message.toString()) ? JSON.parse(message.toString())?.sensor[this.props.identifier] : undefined
-                );
+                prevState.data?.datasets[0].data.push(!data ? data : data[this.props.identifier]);
                 return prevState.data?.datasets[0].data;
               })(),
               borderColor: `rgb${chartInfo.borderColorRGB}`,
